@@ -27,7 +27,7 @@ Accountant_LastMoney = 0;
 Accountant_Verbose = nil;
 Accountant_GotName = false;
 Accountant_CurrentTab = 1;
-Accountant_LogModes = {"Session","Day","Week","Total"};
+Accountant_LogModes = {ACCLOC_SESS,ACCLOC_DAY,ACCLOC_WEEK,ACCLOC_TOTAL};
 Accountant_Player = "";
 local Accountant_RepairAllItems_old;
 local Accountant_CursorHasItem_old;
@@ -104,7 +104,7 @@ function Accountant_SetLabels()
 	local name = this:GetName();
 	local header = getglobal(name.."TitleText");
 	if ( header ) then 
-		header:SetText(ACCLOC_TITLE.." "..Accountant_Version);
+		header:SetText("Accountant".." "..Accountant_Version);
 	end
 end
 
@@ -127,7 +127,7 @@ function Accountant_OnLoad()
 
 	-- Add myAddOns support
 	if myAddOnsList then
-		myAddOnsList.Accountant = {name = "Accountant", description = "Tracks your incomings / outgoings", version = Accountant_Version, frame = "AccountantFrame", optionsframe = "AccountantFrame"};
+		myAddOnsList.Accountant = {name = "Accountant", description = Accountant_desc, version = Accountant_Version, frame = "AccountantFrame", optionsframe = "AccountantFrame"};
 	end
 
 	-- Confirm box
@@ -166,7 +166,7 @@ function Accountant_OnLoad()
 	PanelTemplates_SetTab(AccountantFrame, AccountantFrameTab1);
 	PanelTemplates_UpdateTabs(AccountantFrame);
 	
-	ACC_Print(ACCLOC_TITLE.." " .. Accountant_Version .. " "..ACCLOC_LOADED);
+	ACC_Print("Accountant".." " .. Accountant_Version .. " "..ACCLOC_LOADED);
 end
 
 function Accountant_LoadData()
@@ -213,18 +213,18 @@ function Accountant_LoadData()
 			Accountant_Data[key][mode].In  = Accountant_SaveData[Accountant_Player]["data"][key][mode].In;
 			Accountant_Data[key][mode].Out = Accountant_SaveData[Accountant_Player]["data"][key][mode].Out;
 		end
-		Accountant_Data[key]["Session"].In = 0;
-		Accountant_Data[key]["Session"].Out = 0;
+		Accountant_Data[key][ACCLOC_SESS].In = 0;
+		Accountant_Data[key][ACCLOC_SESS].Out = 0;
 
 		-- Old Version Conversion
 		if Accountant_SaveData[Accountant_Player]["data"][key].TotalIn ~= nil then
-			Accountant_SaveData[Accountant_Player]["data"][key]["Total"].In = Accountant_SaveData[Accountant_Player]["data"][key].TotalIn;
-			Accountant_Data[key]["Total"].In = Accountant_SaveData[Accountant_Player]["data"][key].TotalIn;
+			Accountant_SaveData[Accountant_Player]["data"][key][ACCLOC_TOTAL].In = Accountant_SaveData[Accountant_Player]["data"][key].TotalIn;
+			Accountant_Data[key][ACCLOC_TOTAL].In = Accountant_SaveData[Accountant_Player]["data"][key].TotalIn;
 			Accountant_SaveData[Accountant_Player]["data"][key].TotalIn = nil;
 		end
 		if Accountant_SaveData[Accountant_Player]["data"][key].TotalOut ~= nil then
-			Accountant_SaveData[Accountant_Player]["data"][key]["Total"].Out = Accountant_SaveData[Accountant_Player]["data"][key].TotalOut;
-			Accountant_Data[key]["Total"].Out = Accountant_SaveData[Accountant_Player]["data"][key].TotalOut;
+			Accountant_SaveData[Accountant_Player]["data"][key][ACCLOC_TOTAL].Out = Accountant_SaveData[Accountant_Player]["data"][key].TotalOut;
+			Accountant_Data[key][ACCLOC_TOTAL].Out = Accountant_SaveData[Accountant_Player]["data"][key].TotalOut;
 			Accountant_SaveData[Accountant_Player]["data"][key].TotalOut = nil;
 		end
 		if Accountant_SaveData[key] ~= nil then
@@ -262,10 +262,10 @@ function Accountant_Slash(msg)
 	elseif args[1] == 'verbose' then
 		if Accountant_Verbose == nil then
 			Accountant_Verbose = 1;
-			ACC_Print("Verbose Mode On");
+			ACC_Print("Verbose "..ACCLOC_MOD_ON);
 		else
 			Accountant_Verbose = nil;
-			ACC_Print("Verbose Mode Off");
+			ACC_Print("Verbose "..ACCLOC_MOD_OFF);
 		end
 	elseif args[1] == 'week' then
 		ACC_Print(Accountant_WeekStart());
@@ -334,7 +334,7 @@ function Accountant_OnEvent(event)
 		Accountant_OnShareMoney(event, arg1)
 
 	end
-	if Accountant_Verbose and Accountant_Mode ~= oldmode then ACC_Print("Accountant mode changed to '"..Accountant_Mode.."'"); end
+	if Accountant_Verbose and Accountant_Mode ~= oldmode then ACC_Print(ACCLOC_MOD_CHANGED..Accountant_Mode.."'"); end
 end
 
 function Accountant_OnShareMoney(event, arg1) 
@@ -408,10 +408,10 @@ function Accountant_OnShow()
 	if Accountant_SaveData[Accountant_Player]["options"]["date"] ~= cdate then
 		-- Its a new day! clear out the day tab
 		for mode,value in Accountant_Data do
-			Accountant_Data[mode]["Day"].In = 0;
-			Accountant_SaveData[Accountant_Player]["data"][mode]["Day"].In = 0;
-			Accountant_Data[mode]["Day"].Out = 0;
-			Accountant_SaveData[Accountant_Player]["data"][mode]["Day"].Out = 0;
+			Accountant_Data[mode][ACCLOC_DAY].In = 0;
+			Accountant_SaveData[Accountant_Player]["data"][mode][ACCLOC_DAY].In = 0;
+			Accountant_Data[mode][ACCLOC_DAY].Out = 0;
+			Accountant_SaveData[Accountant_Player]["data"][mode][ACCLOC_DAY].Out = 0;
 		end
 	end
 	Accountant_SaveData[Accountant_Player]["options"]["date"] = cdate;
@@ -419,10 +419,10 @@ function Accountant_OnShow()
 	if Accountant_SaveData[Accountant_Player]["options"]["dateweek"] ~= Accountant_WeekStart() then
 		-- Its a new week! clear out the week tab
 		for mode,value in Accountant_Data do
-			Accountant_Data[mode]["Week"].In = 0;
-			Accountant_SaveData[Accountant_Player]["data"][mode]["Week"].In = 0;
-			Accountant_Data[mode]["Week"].Out = 0;
-			Accountant_SaveData[Accountant_Player]["data"][mode]["Week"].Out = 0;
+			Accountant_Data[mode][ACCLOC_WEEK].In = 0;
+			Accountant_SaveData[Accountant_Player]["data"][mode][ACCLOC_WEEK].In = 0;
+			Accountant_Data[mode][ACCLOC_WEEK].Out = 0;
+			Accountant_SaveData[Accountant_Player]["data"][mode][ACCLOC_WEEK].Out = 0;
 		end
 	end
 	Accountant_SaveData[Accountant_Player]["options"]["dateweek"] = Accountant_WeekStart();
@@ -468,7 +468,7 @@ function Accountant_OnShow()
 				alltotal = alltotal + Accountant_SaveData[char]["options"]["totalcash"];
 				getglobal("AccountantFrameRow" ..i.."Out"):SetText(Accountant_SaveData[char]["options"]["date"]);
 			else
-				getglobal("AccountantFrameRow" ..i.."In"):SetText("Unknown");
+				getglobal("AccountantFrameRow" ..i.."In"):SetText(ACCLOC_OTHER);
 			end
 			i=i+1;
 		end
@@ -505,10 +505,7 @@ end
 
 function Accountant_ResetData()
 	local type = Accountant_LogModes[Accountant_CurrentTab];
-	if type == "Total" then
-		type = "overall";
-	end
-	StaticPopupDialogs["ACCOUNTANT_RESET"].text = ACCLOC_RESET_CONF.." "..type.." "..ACCLOC_TOTAL.."?";
+	StaticPopupDialogs["ACCOUNTANT_RESET"].text = ACCLOC_RESET_CONF.." "..type.." "..ACCLOC_RESET_FULLY.."?";
 	local dialog = StaticPopup_Show("ACCOUNTANT_RESET","weeee");
 end
 
@@ -541,14 +538,14 @@ function Accountant_UpdateLog()
 			Accountant_Data[mode][logmode].In = Accountant_Data[mode][logmode].In + diff
 			Accountant_SaveData[Accountant_Player]["data"][mode][logmode].In = Accountant_Data[mode][logmode].In;
 		end
-		if Accountant_Verbose then ACC_Print("Gained "..Accountant_NiceCash(diff).." from "..mode); end
+		if Accountant_Verbose then ACC_Print(ACCLOC_GAINED..Accountant_NiceCash(diff)..ACCLOC_FROM..mode); end
 	elseif diff < 0 then
 		diff = diff * -1;
 		for key,logmode in Accountant_LogModes do
 			Accountant_Data[mode][logmode].Out = Accountant_Data[mode][logmode].Out + diff
 			Accountant_SaveData[Accountant_Player]["data"][mode][logmode].Out = Accountant_Data[mode][logmode].Out;
 		end
-		if Accountant_Verbose then ACC_Print("Lost "..Accountant_NiceCash(diff).." from "..mode); end
+		if Accountant_Verbose then ACC_Print(ACCLOC_LOST..Accountant_NiceCash(diff)..ACCLOC_FROM..mode); end
 	end
 
 	-- special case mode resets

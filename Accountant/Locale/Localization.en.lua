@@ -1,5 +1,12 @@
+Accountant_desc		=	"Tracks your incomings / outgoings"
+
+ACCLOC_GAINED		=	"Gained "
+ACCLOC_LOST			=	"Lost "
+ACCLOC_FROM			= 	" from "
+ACCLOC_MOD_CHANGED	=	"Accountant mode changed to '"
+ACCLOC_MOD_ON		=	"Mode On"
+ACCLOC_MOD_OFF		=	"Mode Off"
 -- Header
-ACCLOC_TITLE		=	"Accountant";
 ACCLOC_TOT_IN		=	"Total Incomings";
 ACCLOC_TOT_OUT		=	"Total Outgoings";
 ACCLOC_NET			=	"Net Profit / Loss";
@@ -27,9 +34,7 @@ ACCLOC_REPAIR		=	"Repair Costs";
 ACCLOC_AUC			=	"Auction House";
 
 -- Buttons
-ACCLOC_RESET		=	"Reset";
 ACCLOC_OPTBUT		=	"Options";
-ACCLOC_EXIT			=	"Exit";
 
 -- Tabs
 ACCLOC_SESS			=	"Session";
@@ -54,6 +59,7 @@ ACCLOC_DONE			=	"Done";
 
 -- Misc
 ACCLOC_RESET_CONF	=	"Are you sure you want to reset the";
+ACCLOC_RESET_FULLY	=	"fully";
 ACCLOC_NEWPROFILE	=	"New Accountant profile created for";
 ACCLOC_LOADPROFILE	=	"Loaded Accountant Profile for";
 ACCLOC_LOADED		=	"Loaded";

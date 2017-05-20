@@ -1,5 +1,3 @@
-ACCOUNTANT_OPTIONS_TITLE = "Accountant Options";
-
 function AccountantOptions_Toggle()
 	if(AccountantOptionsFrame:IsVisible()) then
 		AccountantOptionsFrame:Hide();

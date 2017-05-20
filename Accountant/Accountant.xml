@@ -1,15 +1,12 @@
 <!--
 	Accountant
-
+	
 	by Sabaki (Sabaki@gmail.com)
 -->
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
-	<Script file="localization.en.lua"/>
-	<Script file="localization.fr.lua"/>
-	<Script file="localization.de.lua"/>
 	<Script file="Accountant.lua"/>
-
+	
 	<!-- Item Row Template -->
 	<Button name="AccountantTabTemplate" inherits="CharacterFrameTabButtonTemplate" virtual="true">
 		<Scripts>
@@ -18,7 +15,7 @@
 			</OnClick>
 		</Scripts>
 	</Button>
-
+	
 	<Frame name="AccountantRowTemplate" virtual="true">
 		<Size>
 			<AbsDimension x="320" y="19"/>
@@ -55,7 +52,7 @@
 			</Layer>
 		</Layers>
 	</Frame>
-
+	
 	<!-- Compact Money Frame -->
 	<Frame name="AccountantMoneyFrameTemplate" virtual="true">
 		<Frames>
@@ -90,7 +87,7 @@
 			</BackgroundInsets>
 		</Backdrop>
 	</Frame>
-
+	
 	<!-- Main Window -->
 	<Frame name="AccountantFrame" toplevel="true" enableMouse="true" frameStrata="HIGH" movable="true" parent="UIParent" hidden="true">
 		<Size>
@@ -108,18 +105,18 @@
 				<Texture name="AccountantFramePortrait">
                     <Size>
                         <AbsDimension x="60" y="60"/>
-                    </Size>
+					</Size>
                     <Anchors>
                         <Anchor point="TOPLEFT">
                             <Offset>
                                 <AbsDimension x="7" y="-6"/>
-                            </Offset>
-                        </Anchor>
-                    </Anchors>
-                </Texture>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
 			</Layer>
 			<Layer level="ARTWORK">
-				<Texture name="$parentTopLeft" file="Interface\AddOns\Accountant\AccountantFrame-TopLeft">
+				<Texture name="$parentTopLeft" file="Interface\AddOns\Accountant\Images\AccountantFrame-TopLeft">
 					<Size>
 						<AbsDimension x="256" y="256"/>
 					</Size>
@@ -127,7 +124,7 @@
 						<Anchor point="TOPLEFT"/>
 					</Anchors>
 				</Texture>
-				<Texture name="$parentTopRight" file="Interface\AddOns\Accountant\AccountantFrame-TopRight">
+				<Texture name="$parentTopRight" file="Interface\AddOns\Accountant\Images\AccountantFrame-TopRight">
 					<Size>
 						<AbsDimension x="128" y="256"/>
 					</Size>
@@ -135,7 +132,7 @@
 						<Anchor point="TOPRIGHT"/>
 					</Anchors>
 				</Texture>
-				<Texture name="$parentBotLeft" file="Interface\AddOns\Accountant\AccountantFrame-BotLeft">
+				<Texture name="$parentBotLeft" file="Interface\AddOns\Accountant\Images\AccountantFrame-BotLeft">
 					<Size>
 						<AbsDimension x="256" y="256"/>
 					</Size>
@@ -147,7 +144,7 @@
 						</Anchor>
 					</Anchors>
 				</Texture>
-				<Texture name="$parentBotRight" file="Interface\AddOns\Accountant\AccountantFrame-BotRight">
+				<Texture name="$parentBotRight" file="Interface\AddOns\Accountant\Images\AccountantFrame-BotRight">
 					<Size>
 						<AbsDimension x="128" y="256"/>
 					</Size>
@@ -272,7 +269,7 @@
 				</FontString>
 			</Layer>
 		</Layers>
-
+		
 		<Frames>
 			<Frame name="$parentRow1" inherits="AccountantRowTemplate">
 				<Anchors>
@@ -409,7 +406,7 @@
 					</Anchor>
 				</Anchors>
 			</Frame>
-
+			
 			<Button name="$parentCloseButton" inherits="UIPanelCloseButton">
 				<Anchors>
 					<Anchor point="TOPRIGHT" relativeTo="$parent" relativePoint="TOPRIGHT">
@@ -419,7 +416,7 @@
 					</Anchor>
 				</Anchors>
 			</Button>
-			<Button name="$parentExitButton" inherits="UIPanelButtonTemplate" text="ACCLOC_EXIT">
+			<Button name="$parentExitButton" inherits="UIPanelButtonTemplate" text="EXIT">
 				<Size>
 					<AbsDimension x="77" y="21"/>
 				</Size>
@@ -453,7 +450,7 @@
 					</OnClick>
 				</Scripts>
 			</Button>
-			<Button name="$parentResetButton" inherits="UIPanelButtonTemplate" text="ACCLOC_RESET">
+			<Button name="$parentResetButton" inherits="UIPanelButtonTemplate" text="RESET">
 				<Size>
 					<AbsDimension x="60" y="22"/>
 				</Size>
@@ -532,7 +529,7 @@
 				tinsert(UISpecialFrames, "AccountantFrame");
 				UIPanelWindows["AccountantFrame"] = { area = "left", pushable = 11 };
 				this:RegisterForDrag("LeftButton");
-
+				
 				-- Setup
 				Accountant_RegisterEvents();
 			</OnLoad>

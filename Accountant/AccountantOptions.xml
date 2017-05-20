@@ -22,7 +22,7 @@
 			<Layer level="ARTWORK">
 				<Texture name="AccountantOptionsFrameHeader" file="Interface\DialogFrame\UI-DialogBox-Header">
 					<Size>
-						<AbsDimension x="256" y="64"/>
+						<AbsDimension x="310" y="64"/>
 					</Size>
 					<Anchors>
 						<Anchor point="TOP">
@@ -32,7 +32,7 @@
 						</Anchor>
 					</Anchors>
 				</Texture>
-				<FontString inherits="GameFontNormal" text="ACCOUNTANT_OPTIONS_TITLE">
+				<FontString inherits="GameFontNormal" text="ACCLOC_OPTS">
 					<Anchors>
 						<Anchor point="TOP" relativeTo="AccountantOptionsFrameHeader">
 							<Offset>
